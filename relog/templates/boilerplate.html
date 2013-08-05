@@ -21,20 +21,9 @@ pages can just extend this and start with a blank body.
 <title>{% block title %}{% endblock %}</title>
 <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
 
-{# Load LESS #}
-{% if debug %}
-<link rel="stylesheet/less" href="{% static 'bootstrap/less/bootstrap.less' %}" />
-{% block extra_less_debug %}{% endblock %}
-<script src="{% static '3rdparty/js/less-1.4.2.min.js' %}"></script>
-{% else %}
-{% compress css %}
-<link rel="stylesheet" href="{% static 'bootstrap/less/bootstrap.less' %}" />
-{% block extra_less_release %}{% endblock %}
-{% endcompress %}
-{% endif %}
-
 {# Load CSS #}
 {% compress css %}
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css" />
 {% block extra_css %}{% endblock %}
 {% endcompress %}
 
