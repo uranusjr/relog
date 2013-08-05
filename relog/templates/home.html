@@ -1,0 +1,19 @@
+{% extends 'navbared.html' %}
+
+{% load staticfiles %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'relog/css/home.css' %}">
+{% endblock %}
+
+{% block body %}
+{{ block.super }}
+
+<div class="row signup-row">
+  <div class="col-lg-4 col-offset-4">
+    <a class="btn btn-primary btn-large btn-block"
+       href="{% url 'account_signup' %}">Sign Up</a>
+  </div>
+</div>
+
+{% endblock %}

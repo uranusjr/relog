@@ -1,0 +1,58 @@
+{% extends 'boilerplate.html' %}
+
+{% load staticfiles %}
+
+{% block extra_head %}
+<style>
+#editor {
+  width: 100%;
+}
+#rendered {
+  width: 100%;
+  min-height: 30em;
+}
+</style>
+{% endblock %}
+
+{% block body %}
+
+<div class="row">
+  <div class="col-lg-6">
+    <div id="editor"></div>
+  </div>
+  <div class="col-lg-6">
+    <div id="rendered"></div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <button id="convert" class="btn" type="button">Convert</button>
+  </div>
+</div>
+
+<script src="{% static 'ace/js/ace.js' %}"></script>
+<script src="{% static 'diff_match_patch/js/diff_match_patch.js' %}"></script>
+<script>
+// Load Ace Editor
+var editor = ace.edit("editor");
+var session = editor.getSession();
+editor.setTheme("ace/theme/xcode");
+session.setUseWrapMode(true);
+session.setMode("ace/mode/markdown");
+
+// Things
+$(document).ready(function() {
+  $('#editor').height($('#rendered').height().toString() + "px");
+  $('#convert').click(function() {
+    var lines = [];
+    $('#editor .ace_text-layer .ace_line').each(function() {
+      lines.push($(this).text());
+    });
+    var content = lines.join('\n');
+    $.post('{% url "post_render" %}', {'content': content}).done(function(data) {
+      $('#rendered').html(data);
+    });
+  });
+});
+</script>
+{% endblock body %}

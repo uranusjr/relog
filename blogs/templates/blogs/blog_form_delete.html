@@ -1,0 +1,10 @@
+{% extends 'blogs/blog_form.html' %}
+
+{% load i18n %}
+
+{% block form_fields %}
+{% blocktrans %}
+<p>Are you sure you want to delete blog "{{ object }}"?</p>
+<p><strong>WARNING: This cannot be undone!</strong></p>
+{% endblocktrans %}
+{% endblock %}

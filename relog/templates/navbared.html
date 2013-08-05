@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<!-- navbar -->
+<div class="navbar">
+  <a class="navbar-brand" href="#">reLog</a>
+  <ul class="nav navbar-nav pull-left">
+    {% block left_navs %}{% endblock %}
+  </ul>
+  <ul class="nav navbar-nav pull-right">
+    {% block right_navs %}{% endblock %}
+    {% if user.is_authenticated %}
+      <li>
+        <a id="logout_link" href="{% url 'account_logout' %}">
+          {{ user.username }}
+        </a>
+      </li>
+    {% else %}
+      <li><a href="{% url 'account_login' %}">Log in</a></li>
+    {% endif %}
+  </ul>
+</div>
+
+{% endblock %}

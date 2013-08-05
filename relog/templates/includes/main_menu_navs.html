@@ -1,0 +1,5 @@
+{% for page in menu_pages %}
+<li{% ifequal request.path page.0 %} class="active"{% endifequal %}>
+  <a href="{{ page.0 }}">{{ page.1 }}</a>
+</li>
+{% endfor %}

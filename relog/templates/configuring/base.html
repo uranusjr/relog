@@ -1,0 +1,14 @@
+{% extends 'navbared.html' %}
+
+{% load users_tags %}
+
+{% block left_navs %}
+{% user_menu %}
+{% endblock %}
+
+{% block body %}
+{{ block.super }}
+<div class="container">
+  {% block content %}{% endblock %}
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% comment %}
+boilerplate.html
+
+Contain basic HTML 5 page structure and some dependencies, so that all HTML
+pages can just extend this and start with a blank body.
+{% endcomment %}
+
+{% load staticfiles compress %}
+
+<!doctype html>
+
+<html lang="{{ LANGUAGE_CODE }}">
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="{{ LANGUAGE_CODE }}" />
+<meta name="viewport" content="width=device-width" />
+<meta name="keywords" content="{% block meta_keywords %}{% endblock %}" />
+<meta name="description" content="{% block meta_description %}{% endblock %}" />
+<title>{% block title %}{% endblock %}</title>
+<link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
+
+{# Load LESS #}
+{% if debug %}
+<link rel="stylesheet/less" href="{% static 'bootstrap/less/bootstrap.less' %}" />
+{% block extra_less_debug %}{% endblock %}
+<script src="{% static '3rdparty/js/less-1.4.2.min.js' %}"></script>
+{% else %}
+{% compress css %}
+<link rel="stylesheet" href="{% static 'bootstrap/less/bootstrap.less' %}" />
+{% block extra_less_release %}{% endblock %}
+{% endcompress %}
+{% endif %}
+
+{# Load CSS #}
+{% compress css %}
+{% block extra_css %}{% endblock %}
+{% endcompress %}
+
+{# Load anything #}
+{% block extra_head %}{% endblock %}
+
+</head>
+
+<body id="{% block body_id %}body{% endblock %}">
+
+{% block body %}{% endblock %}
+
+
+{# Load JavaScipt (Also see block footer_js) #}
+{% compress js %}
+<script src="//code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
+<script src="{% static 'relog/js/boilerplate.js' %}"></script>
+{% block extra_js %}{% endblock %}
+{% endcompress %}
+
+{# Load anything #}
+{% block extra_body %}{% endblock %}
+
+</body>
+
+</html>

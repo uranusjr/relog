@@ -1,0 +1,6 @@
+{% extends 'blogs/blog_form.html' %}
+
+{% block content %}
+{{ block.super }}
+<a class="btn btn-danger" href="{% url 'delete_blog' object.slug %}">Delete blog</a>
+{% endblock %}

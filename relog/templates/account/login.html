@@ -1,0 +1,14 @@
+{% extends 'configuring/base.html' %}
+
+{% load i18n crispy_forms_tags %}
+
+{% block content %}
+<form id="login_form" class="form" method="post">
+{% csrf_token %}
+  <fieldset>
+    <legend>{% trans 'Log in' %}</legend>
+    {{ form|crispy }}
+    <button class="btn btn-primary" type="submit">{% trans 'Log in' %}</button>
+  </fieldset>
+</form>
+{% endblock %}

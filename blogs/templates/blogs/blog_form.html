@@ -1,0 +1,11 @@
+{% extends 'configuring/base.html' %}
+
+{% load i18n crispy_forms_tags %}
+
+{% block content %}
+<form method="post">
+  {% csrf_token %}
+  {% block form_fields %}{{ form|crispy }}{% endblock %}
+  <button class="btn btn-primary" type="submit">{% trans 'Confirm' %}</button>
+</form>
+{% endblock %}

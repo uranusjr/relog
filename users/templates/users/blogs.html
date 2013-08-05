@@ -1,0 +1,34 @@
+{% extends 'users/base.html' %}
+
+{% load i18n crispy_forms_tags %}
+
+{% block content %}
+<table class="table table-striped">
+  <tr>
+    <th>{% trans 'Blog Name' %}</th>
+    <th>{% trans 'Owner' %}</th>
+    <th>{% trans 'Action' %}</th>
+  </tr>
+  {% for blog in owned_blogs %}
+    <tr>
+      <td>{{ blog.title }}</td>
+      <td>{{ blog.owner.username }}</td>
+      <td>
+        <a class="btn btn-info" href="{% url 'update_blog' blog.slug %}">
+          {% trans 'Info' %}
+        </a>
+      </td>
+    </tr>
+  {% endfor %}
+  {% for blog in authoring_blogs %}
+    <tr>
+      <td>{{ blog.title }}</td>
+      <td>{{ blog.owner.username }}</td>
+      <td></td>
+    </tr>
+  {% endfor %}
+</table>
+<a href="{% url 'create_blog' %}" class="btn btn-primary">
+  {% trans 'Add blog...' %}
+</a>
+{% endblock %}
