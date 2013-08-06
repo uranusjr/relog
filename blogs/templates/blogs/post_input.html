@@ -18,7 +18,9 @@
 
 <div class="row">
   <div class="col-lg-6">
-    <div id="editor"></div>
+    <form method="post">
+      {{ form }}
+    </form>
   </div>
   <div class="col-lg-6">
     <div id="rendered"></div>
@@ -29,30 +31,4 @@
     <button id="convert" class="btn" type="button">Convert</button>
   </div>
 </div>
-
-<script src="//d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js"></script>
-<script src="{% static 'diff_match_patch/js/diff_match_patch.js' %}"></script>
-<script>
-// Load Ace Editor
-var editor = ace.edit("editor");
-var session = editor.getSession();
-editor.setTheme("ace/theme/xcode");
-session.setUseWrapMode(true);
-session.setMode("ace/mode/markdown");
-
-// Things
-$(document).ready(function() {
-  $('#editor').height($('#rendered').height().toString() + "px");
-  $('#convert').click(function() {
-    var lines = [];
-    $('#editor .ace_text-layer .ace_line').each(function() {
-      lines.push($(this).text());
-    });
-    var content = lines.join('\n');
-    $.post('{% url "post_render" %}', {'content': content}).done(function(data) {
-      $('#rendered').html(data);
-    });
-  });
-});
-</script>
 {% endblock body %}

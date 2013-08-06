@@ -1,0 +1,23 @@
+{% extends 'blogs/base_configuring.html' %}
+
+{% load i18n %}
+
+{% block content %}
+<table class="table table-striped">
+  <tr>
+    <th>{% trans 'Title' %}</th>
+    <th>{% trans 'Author' %}</th>
+    <th>{% trans 'Posted At' %}</th>
+  </tr>
+  {% for post in blog_posts %}
+    <tr>
+      <td>{{ post.title }}</td>
+      <td>{{ post.author.username }}</td>
+      <td>{{ post.created }}</td>
+    </tr>
+  {% endfor %}
+</table>
+<a href="{% url 'add_post' blog.slug %}" class="btn btn-primary">
+  {% trans 'Add new post...' %}
+</a>
+{% endblock %}

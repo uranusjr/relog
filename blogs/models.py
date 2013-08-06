@@ -92,7 +92,7 @@ class Post(TimeStampedModel, StatusModel, models.Model):
         update_fields = kwargs.get('update_fields', None)
         if update_fields is None or 'raw_content' in update_fields:
             pass    # TODO: fill rendered fields
-        super(Post).save(**kwargs)
+        super(Post, self).save(**kwargs)
 
 
 

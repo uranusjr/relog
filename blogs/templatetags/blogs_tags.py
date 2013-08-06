@@ -11,5 +11,6 @@ def blog_config_menu(context, blog):
     reverse_kwargs = {'slug': blog.slug}
     context['menu_pages'] = (
         (reverse('update_blog', kwargs=reverse_kwargs), _('Settings')),
+        (reverse('blog_posts', kwargs=reverse_kwargs), _('Posts'))
     )
     return context

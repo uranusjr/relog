@@ -145,6 +145,7 @@ INSTALLED_APPS = (
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.google',
+    'django_ace',
     'braces',
     'crispy_forms',
 
