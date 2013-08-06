@@ -22,5 +22,4 @@ class CreateBlogForm(EditBlogForm):
 class UpdateBlogForm(EditBlogForm):
     class Meta(EditBlogForm.Meta):
         model = Blog
-        fields = (deepcopy(EditBlogForm.Meta.fields)
-                  + ['posts_per_page', 'collaborators'])
+        fields = (deepcopy(EditBlogForm.Meta.fields) + ['posts_per_page'])

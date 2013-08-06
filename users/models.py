@@ -4,7 +4,4 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     def get_absolute_url(self):
-        return reverse(
-            'user_account',
-            kwargs={'username': self.get_username()}
-        )
+        return reverse('user_page', kwargs={'username': self.get_username()})

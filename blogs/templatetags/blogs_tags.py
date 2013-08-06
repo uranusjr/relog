@@ -7,9 +7,9 @@ register = Library()
 
 
 @register.inclusion_tag('includes/main_menu_navs.html', takes_context=True)
-def user_menu(context):
+def blog_config_menu(context):
+    reverse_kwargs = {'slug': context['blog_slug']}
     context['menu_pages'] = (
-        (reverse('account_general'), _('Account')),
-        (reverse('account_blogs'), _('Blogs'))
+        (reverse('update_blog', kwargs=reverse_kwargs), _('Settings')),
     )
     return context

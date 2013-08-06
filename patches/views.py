@@ -5,9 +5,7 @@ from braces.views import LoginRequiredMixin
 
 class OwnerOnlyMixin(LoginRequiredMixin):
     def get_owner(self, request, *args, **kwargs):
-        raise NotImplementedError(
-            'Implement of get_owner needed in OwnerOnlyMixin subclasses.'
-        )
+        return request.user
 
     def dispatch(self, request, *args, **kwargs):
         user = request.user

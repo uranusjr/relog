@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import get_user_model
 from model_utils.choices import Choices
@@ -92,3 +94,11 @@ class Post(TimeStampedModel, StatusModel, models.Model):
         if update_fields is None or 'raw_content' in update_fields:
             pass    # TODO: fill rendered fields
         super(Post).save(**kwargs)
+
+
+
+@receiver(post_save, sender=Blog)
+def blog_post_save(instance, update_fields, *args, **kwargs):
+    """Force blog owner into collaborators list"""
+    if update_fields is None or 'owner' in update_fields:
+        instance.collaborators.add(instance.owner)
