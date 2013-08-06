@@ -1,5 +1,4 @@
 from django.core.urlresolvers import reverse
-from django.template import RequestContext
 from django.views.generic import CreateView, UpdateView, DeleteView
 from braces.views import LoginRequiredMixin
 from .models import Blog
@@ -7,14 +6,12 @@ from .forms import CreateBlogForm, UpdateBlogForm
 
 
 class BlogContextMixin(object):
-    def dispatch(self, *args, **kwargs):
-        self.blog_slug = kwargs['slug']
-        return super(BlogContextMixin, self).dispatch(*args, **kwargs)
-
     def render_to_response(self, context, **kwargs):
-        context['blog_slug'] = self.blog_slug
+        context.update({
+            'blog_slug': self.object.slug if self.object is not None else None
+        })
         return super(BlogContextMixin, self).render_to_response(
-            RequestContext(self.request, context), **kwargs
+            context, **kwargs
         )
 
 

@@ -3,4 +3,5 @@
 {% block content %}
 {{ block.super }}
 <a class="btn btn-danger" href="{% url 'delete_blog' object.slug %}">Delete blog</a>
+<a href="{% url 'account_blogs' %}">&lt;&lt; Blog list</a>
 {% endblock %}
