@@ -2,7 +2,7 @@ from django.core.urlresolvers import reverse
 from django.views.generic import CreateView, UpdateView, DeleteView
 from braces.views import LoginRequiredMixin
 from .models import Blog
-from .forms import CreateBlogForm, UpdateBlogForm
+from .forms import BlogCreateForm, BlogUpdateForm
 
 
 class BlogOwnerMixin(LoginRequiredMixin):
@@ -16,25 +16,25 @@ class BlogOwnerMixin(LoginRequiredMixin):
         return reverse('account_blogs')
 
 
-class CreateBlogView(BlogOwnerMixin, CreateView):
-    form_class = CreateBlogForm
+class BlogCreateView(BlogOwnerMixin, CreateView):
+    form_class = BlogCreateForm
     template_name = 'blogs/blog_form_create.html'
 
 
-class UpdateBlogView( BlogOwnerMixin, UpdateView):
+class BlogUpdateView(BlogOwnerMixin, UpdateView):
     model = Blog
-    form_class = UpdateBlogForm
+    form_class = BlogUpdateForm
     template_name = 'blogs/blog_form_update.html'
 
 
-class DeleteBlogView(BlogOwnerMixin, DeleteView):
+class BlogDeleteView(BlogOwnerMixin, DeleteView):
     model = Blog
     template_name = 'blogs/blog_form_delete.html'
 
 
-create_blog = CreateBlogView.as_view()
-update_blog = UpdateBlogView.as_view()
-delete_blog = DeleteBlogView.as_view()
+create_blog = BlogCreateView.as_view()
+update_blog = BlogUpdateView.as_view()
+delete_blog = BlogDeleteView.as_view()
 
 
 # from django.forms.models import modelform_factory
