@@ -21,7 +21,7 @@ class EditBlogView(LoginRequiredMixin):
 
 class CreateBlogView(EditBlogView, CreateView):
     form_class = CreateBlogForm
-    template_name = 'blogs/blog_form_update_create.html'
+    template_name = 'blogs/blog_form_create.html'
 
 
 class UpdateBlogView(EditBlogView, UpdateView):

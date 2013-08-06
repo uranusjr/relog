@@ -111,7 +111,7 @@ AUTHENTICATION_BACKENDS = (
 
 AUTH_USER_MODEL = 'users.User'
 
-ACCOUNT_ADAPTER = 'relog.utils.ReLogAccountAdapter'
+ACCOUNT_ADAPTER = 'relog.ReLogAccountAdapter'
 
 ACCOUNT_LOGOUT_ON_GET = True
 
@@ -148,9 +148,10 @@ INSTALLED_APPS = (
     'braces',
     'crispy_forms',
 
-    'relog',
+    'patches',
     'users',
-    'blogs'
+    'blogs',
+    'relog'
 )
 
 # A sample logging configuration. The only tangible logging

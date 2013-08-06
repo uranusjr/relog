@@ -1,15 +1,17 @@
 from django.conf.urls import patterns, url
 
-# Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-# admin.autodiscover()
+
+BLOG_SLUG_REGEX = r'(?P<slug>[\w-]+)'
 
 urlpatterns = patterns(
-    'blogs',
-
-    url(r'^blog/new/$', 'views.create_blog', name='create_blog'),
-    url(r'^blog/(?P<slug>[\w-]+)/$', 'views.update_blog', name='update_blog'),
-    url(r'^blog/(?P<slug>[\w-]+)/delete/$', 'views.delete_blog',
-        name='delete_blog'),
-    url(r'^_post_render$', 'ajax.render_post_raw_content', name='post_render')
+    'blogs.views',
+    url(r'^{slug}/$'.format(slug=BLOG_SLUG_REGEX),
+        'update_blog', name='update_blog'),
+    url(r'^{slug}/delete/$'.format(slug=BLOG_SLUG_REGEX),
+        'delete_blog', name='delete_blog')
 )
+
+# urlpatterns += patterns(
+#     'blogs.ajax',
+#     url(r'^_post_render$', 'render_post_raw_content', name='post_render')
+# )

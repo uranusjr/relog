@@ -1,7 +1,7 @@
-from django.core.exceptions import PermissionDenied
+from django.views.generic import ListView
 from django.shortcuts import render
-from django.contrib.auth.views import redirect_to_login
-from braces.views import LoginRequiredMixin
+from blogs.models import Blog
+from users.views import UserAccountBaseRedirectView, UsernameKeyedOwnerMixin
 
 
 def home(request, template='home.html'):
@@ -9,24 +9,30 @@ def home(request, template='home.html'):
     return render(request, template, context)
 
 
-class OwnerOnlyMixin(LoginRequiredMixin):
+class UserBlogsRedirectView(UserAccountBaseRedirectView):
+    view_name = 'user_blogs'
+
+
+class UserBlogsListView(UsernameKeyedOwnerMixin, ListView):
+    template_name = 'users/blogs.html'
+    context_object_name = 'owned_blogs'
+
     def get_owner(self, request, *args, **kwargs):
-        raise NotImplementedError(
-            'Implement of get_owner needed in OwnerOnlyMixin subclasses.'
+        self.owner = super(UserBlogsListView, self).get_owner(
+            request, *args, **kwargs
         )
+        return self.owner
 
-    def dispatch(self, request, *args, **kwargs):
-        user = request.user
-        if (user.is_authenticated()
-                and user == self.get_owner(request, *args, **kwargs)):
-            dispatch = super(OwnerOnlyMixin, self).dispatch
-            return dispatch(request, *args, **kwargs)
+    def get_queryset(self):
+        owner = self.owner
+        self.authoring_blogs = Blog.objects.filter(collaborators__in=[owner])
+        return Blog.objects.filter(owner=owner)
 
-        # Copied from django-braces to "pretend" the user is not authenticated
-        if self.raise_exception:
-            raise PermissionDenied
-        else:
-            return redirect_to_login(
-                request.get_full_path(),
-                self.get_login_url(), self.get_redirect_field_name()
-            )
+    def get_context_data(self, **kwargs):
+        context = super(UserBlogsListView, self).get_context_data(**kwargs)
+        context['authoring_blogs'] = self.authoring_blogs
+        return context
+
+
+blogs_redirect = UserBlogsRedirectView.as_view()
+blogs = UserBlogsListView.as_view()
