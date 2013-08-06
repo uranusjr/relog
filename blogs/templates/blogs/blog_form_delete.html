@@ -3,11 +3,11 @@
 {% load i18n %}
 
 {% block form_fields %}
-{% blocktrans %}
-<p>Are you sure you want to delete blog "{{ object }}"?</p>
+{% blocktrans with blog_title=blog.title %}
+<p>Are you sure you want to delete blog "{{ blog_title }}"?</p>
 <p><strong>WARNING: This cannot be undone!</strong></p>
 {% endblocktrans %}
-<a class="btn btn-default" href="{% url 'update_blog' object.slug %}">
+<a class="btn btn-default" href="{% url 'update_blog' blog.slug %}">
   {% trans 'Cancel' %}
 </a>
 {% endblock %}

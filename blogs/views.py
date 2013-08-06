@@ -5,16 +5,6 @@ from .models import Blog
 from .forms import CreateBlogForm, UpdateBlogForm
 
 
-class BlogContextMixin(object):
-    def render_to_response(self, context, **kwargs):
-        context.update({
-            'blog_slug': self.object.slug if self.object is not None else None
-        })
-        return super(BlogContextMixin, self).render_to_response(
-            context, **kwargs
-        )
-
-
 class BlogOwnerMixin(LoginRequiredMixin):
     template_name = 'blogs/blog_form.html'
 
@@ -26,18 +16,18 @@ class BlogOwnerMixin(LoginRequiredMixin):
         return reverse('account_blogs')
 
 
-class CreateBlogView(BlogContextMixin, BlogOwnerMixin, CreateView):
+class CreateBlogView(BlogOwnerMixin, CreateView):
     form_class = CreateBlogForm
     template_name = 'blogs/blog_form_create.html'
 
 
-class UpdateBlogView(BlogContextMixin, BlogOwnerMixin, UpdateView):
+class UpdateBlogView( BlogOwnerMixin, UpdateView):
     model = Blog
     form_class = UpdateBlogForm
     template_name = 'blogs/blog_form_update.html'
 
 
-class DeleteBlogView(BlogContextMixin, BlogOwnerMixin, DeleteView):
+class DeleteBlogView(BlogOwnerMixin, DeleteView):
     model = Blog
     template_name = 'blogs/blog_form_delete.html'
 
