@@ -23,10 +23,9 @@ class Blog(models.Model):
         User, blank=True, related_name='authoring_blogs',
         verbose_name=_('collaborators'),
         help_text=_(
-            'Users who can post on this blog. The owner of the blog does not '
-            'count as a collaborator, although he/she (obviously) can post on '
-            'his/her own blog. Collaborators can post, but are not allowed to '
-            'modify settings of the blog.'
+            "Users who can post on this blog. The owner is always one of the "
+            "blog's collaborators. Non-owner collaborators are not allowed to "
+            "modify settings of the blog."
         )
     )
     title = models.CharField(max_length=50, verbose_name=_('title'))
