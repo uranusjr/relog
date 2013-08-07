@@ -11,8 +11,8 @@
   </tr>
   {% for blog in authoring_blogs %}
     <tr>
-      <td>{{ blog.title }}</td>
-      <td>{{ blog.owner.username }}</td>
+      <td><a href="{% url 'blog_posts' blog.slug %}">{{ blog.title }}</a></td>
+      <td><a href="{% url 'account_edit' %}">{{ blog.owner.username }}</a></td>
       <td>
         {% if blog.owner == request.user %}
           <a class="btn btn-info" href="{% url 'update_blog' blog.slug %}">

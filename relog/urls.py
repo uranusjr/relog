@@ -11,6 +11,7 @@ urlpatterns = patterns(
     url(r'^account/', include('users.urls.account')),
     url(r'^users/', include('users.urls.users')),
     url(r'^blogs/', include('blogs.urls')),
+    url(r'^services/blogs/', include('blogs.urls.ajax')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

@@ -14,8 +14,3 @@ urlpatterns = patterns(
     url(r'^{slug}/posts/$'.format(slug=BLOG_SLUG_REGEX),
         'blog_posts', name='blog_posts')
 )
-
-# urlpatterns += patterns(
-#     'blogs.ajax',
-#     url(r'^_post_render$', 'render_post_raw_content', name='post_render')
-# )

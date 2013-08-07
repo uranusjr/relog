@@ -28,9 +28,23 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ['title', 'raw_content']
         widgets = {
-            'raw_content': AceWidget(mode='markdown', theme='xcode')
+            'raw_content': AceWidget(mode='markdown')
         }
 
 
 class PostCreateForm(PostForm):
     pass
+
+
+class PostRenderForm(forms.Form):
+    title = forms.CharField(required=False)
+    raw_content = forms.CharField(required=False)
+
+    # TODO: Choose an adorment that doesn't conflict easily
+    TITLE_ADORMENT = '!'
+
+    def get_full_raw(self):
+        title = self.cleaned_data['title']
+        raw_content = self.cleaned_data['raw_content']
+        dec = self.TITLE_ADORMENT * (len(title) + 1)
+        return '\n'.join([dec, title, dec, raw_content])
