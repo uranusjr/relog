@@ -63,20 +63,20 @@ class PostFormMixin(PostMixin):
     form_class = PostForm
     template_name = 'blogs/post_form.html'
 
-    def get_form_kwargs(self):
+    def get_initial(self):
         """
         Override to prepopulate form. We can't use get_initial because we
         need the form instance.
         """
-        kwargs = super(PostFormMixin, self).get_form_kwargs()
-        initial = kwargs.get('initial', {})
+        initial = super(PostFormMixin, self).get_initial()
         try:
-            initial['raw_original'] = initial['instance'].raw_content
-        except (KeyError, AttributeError):
-            # If initial['instance'] is None (in CreateView, for example),
-            # the original raw content should be blank, so we'll just pass
+            initial['raw_original'] = self.object.raw_content
+        except AttributeError:
+            # If self.object is None (happens when in CreateView's "get", for
+            # example), the original raw content should be blank anyway, so
+            # we'll just pass
             pass
-        return kwargs
+        return initial
 
     def form_valid(self, form):
         form.instance.author = self.request.user
