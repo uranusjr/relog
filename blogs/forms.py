@@ -32,6 +32,10 @@ class PostCreateForm(PostForm):
     pass
 
 
+class PostUpdateForm(PostForm):
+    pass
+
+
 class PostRenderForm(forms.Form):
     title = forms.CharField(required=False)
     raw_content = forms.CharField(required=False)

@@ -4,7 +4,8 @@ from django.shortcuts import get_object_or_404
 from braces.views import LoginRequiredMixin
 from blogs.models import Blog, Post
 from blogs.forms import (
-    BlogForm, BlogCreateForm, BlogUpdateForm, PostForm, PostCreateForm
+    BlogForm, BlogCreateForm, BlogUpdateForm, PostForm, PostCreateForm,
+    PostUpdateForm
 )
 
 
@@ -92,8 +93,14 @@ class PostCreateView(LoginRequiredMixin, PostFormMixin, CreateView):
     template_name = 'blogs/post_form_create.html'
 
 
+class PostUpdateView(LoginRequiredMixin, PostFormMixin, UpdateView):
+    form_class = PostUpdateForm
+    template_name = 'blogs/post_form_update.html'
+
+
 create_blog = BlogCreateView.as_view()
 update_blog = BlogUpdateView.as_view()
 delete_blog = BlogDeleteView.as_view()
 add_post = PostCreateView.as_view()
+update_post = PostUpdateView.as_view()
 blog_posts = PostListConfigView.as_view()

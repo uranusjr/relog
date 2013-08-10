@@ -11,7 +11,7 @@
   </tr>
   {% for post in blog_posts %}
     <tr>
-      <td>{{ post.title }}</td>
+      <td><a href="{% url 'update_post' post.blog.slug post.pk %}">{{ post.title }}</a></td>
       <td><a href="{% url 'account_edit' %}">{{ post.author.username }}</a></td>
       <td>{{ post.created }}</td>
     </tr>

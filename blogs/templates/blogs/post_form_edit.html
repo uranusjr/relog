@@ -1,0 +1,50 @@
+{% extends 'blogs/post_form.html' %}
+
+{% load i18n %}
+
+{% block extra_head %}
+{{ block.super }}
+{{ form.media }}
+{% endblock %}
+
+{% block content %}
+<ul class="nav nav-tabs" id="postFormMode">
+  <li class="active"><a href="#postEdit" data-toggle="tab">{% trans 'Edit' %}</a></li>
+  <li id="postPreViewTab"><a href="#postPreview" data-toggle="tab">{% trans 'Preview' %}</a></li>
+</ul>
+<div class="tab-content">
+  <div class="tab-pane active" id="postEdit">
+    {{ block.super }}
+  </div>
+  <div class="tab-pane" id="postPreview"></div>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script>
+function getEditorContent(editor) {
+  var lines = [];
+  $('.ace_text-layer .ace_line', editor).each(function() {
+    lines.push($(this).text());
+  });
+  return lines.join('\n');
+}
+
+$(document).ready(function($) {
+  $('#postPreViewTab').on('show.bs.tab', function(e) {
+    var postData = {
+      'title': $('#id_title').val(),
+      'raw_content': getEditorContent('.django-ace-widget')
+    };
+    $('#postPreview').empty();
+    $.post('{% url "post_render" %}', postData)
+    .done(function(data) {
+      $('#postPreview').append($(data.compiled));
+    })
+    .fail(function(data) {
+      console.log(data);
+    });
+  });
+});
+</script>
+{% endblock %}

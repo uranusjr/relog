@@ -11,6 +11,8 @@ urlpatterns = patterns(
         'delete_blog', name='delete_blog'),
     url(r'^{slug}/post/$'.format(slug=BLOG_SLUG_REGEX),
         'add_post', name='add_post'),
+    url(r'^{slug}/post/(?P<pk>\d+)/'.format(slug=BLOG_SLUG_REGEX),
+        'update_post', name='update_post'),
     url(r'^{slug}/posts/$'.format(slug=BLOG_SLUG_REGEX),
         'blog_posts', name='blog_posts')
 )
