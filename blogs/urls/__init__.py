@@ -1,18 +1,10 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import patterns, url, include
 
 
-BLOG_SLUG_REGEX = r'(?P<slug>[\w-]+)'
+SLUG_REGEX = r'(?P<slug>[\w-]+)'
 
 urlpatterns = patterns(
     'blogs.views',
-    url(r'^{slug}/$'.format(slug=BLOG_SLUG_REGEX),
-        'update_blog', name='update_blog'),
-    url(r'^{slug}/delete/$'.format(slug=BLOG_SLUG_REGEX),
-        'delete_blog', name='delete_blog'),
-    url(r'^{slug}/post/$'.format(slug=BLOG_SLUG_REGEX),
-        'add_post', name='add_post'),
-    url(r'^{slug}/post/(?P<pk>\d+)/'.format(slug=BLOG_SLUG_REGEX),
-        'update_post', name='update_post'),
-    url(r'^{slug}/posts/$'.format(slug=BLOG_SLUG_REGEX),
-        'blog_posts', name='blog_posts')
+    url(r'^{slug}/!/'.format(slug=SLUG_REGEX), include('blogs.urls.backend')),
+    # url(r'^{slug}/'.format(slug=SLUG_REGEX), include('blogs.urls.frontend'))
 )

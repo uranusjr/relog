@@ -101,6 +101,6 @@ class PostUpdateView(LoginRequiredMixin, PostFormMixin, UpdateView):
 create_blog = BlogCreateView.as_view()
 update_blog = BlogUpdateView.as_view()
 delete_blog = BlogDeleteView.as_view()
-add_post = PostCreateView.as_view()
+create_post = PostCreateView.as_view()
 update_post = PostUpdateView.as_view()
 blog_posts = PostListConfigView.as_view()
