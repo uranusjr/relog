@@ -7,9 +7,7 @@ class BlogForm(forms.ModelForm):
     class Meta:
         model = Blog
         fields = ['title', 'tagline', 'description', 'slug']
-        widgets = {
-            'description': forms.Textarea()
-        }
+        widgets = {'description': forms.Textarea()}
 
 
 class BlogCreateForm(BlogForm):
@@ -27,9 +25,7 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['title', 'raw_content']
-        widgets = {
-            'raw_content': AceWidget(mode='markdown')
-        }
+        widgets = {'raw_content': AceWidget(mode='markdown')}
 
 
 class PostCreateForm(PostForm):
@@ -39,12 +35,3 @@ class PostCreateForm(PostForm):
 class PostRenderForm(forms.Form):
     title = forms.CharField(required=False)
     raw_content = forms.CharField(required=False)
-
-    # TODO: Choose an adorment that doesn't conflict easily
-    TITLE_ADORMENT = '!'
-
-    def get_full_raw(self):
-        title = self.cleaned_data['title']
-        raw_content = self.cleaned_data['raw_content']
-        dec = self.TITLE_ADORMENT * (len(title) + 1)
-        return '\n'.join([dec, title, dec, raw_content])

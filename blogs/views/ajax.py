@@ -1,7 +1,7 @@
-from docutils.core import publish_parts
 from django.views.generic import FormView
 from patches.views import AjaxableMixin
-from .forms import PostRenderForm
+from blogs.forms import PostRenderForm
+from blogs.utils import render_to_html
 
 
 class PostRenderView(AjaxableMixin, FormView):
@@ -9,9 +9,7 @@ class PostRenderView(AjaxableMixin, FormView):
 
     def get_ajax_success_context(self, form):
         context = super(PostRenderView, self).get_ajax_success_context(form)
-        raw = form.get_full_raw()
-        compiled = publish_parts(raw, writer_name='html')['html_body']
-        context['compiled'] = compiled
+        context['compiled'] = render_to_html(form.cleaned_data['raw_content'])
         return context
 
 

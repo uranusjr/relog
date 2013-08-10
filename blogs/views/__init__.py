@@ -2,8 +2,8 @@ from django.core.urlresolvers import reverse
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 from django.shortcuts import get_object_or_404
 from braces.views import LoginRequiredMixin
-from .models import Blog, Post
-from .forms import (
+from blogs.models import Blog, Post
+from blogs.forms import (
     BlogForm, BlogCreateForm, BlogUpdateForm, PostForm, PostCreateForm
 )
 
@@ -97,11 +97,3 @@ update_blog = BlogUpdateView.as_view()
 delete_blog = BlogDeleteView.as_view()
 add_post = PostCreateView.as_view()
 blog_posts = PostListConfigView.as_view()
-
-
-# from django.forms.models import modelform_factory
-# from django.shortcuts import render
-# from .models import BlogPost
-# def post_input(request, template='blogs/post_input.html'):
-#     BlogPostForm = modelform_factory(BlogPost)
-#     return render(request, template, {'form': BlogPostForm()})
