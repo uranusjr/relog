@@ -1,3 +1,4 @@
+import sys
 from os.path import abspath
 from pathlib import Path
 from django.core.exceptions import ImproperlyConfigured
@@ -25,6 +26,8 @@ PROJECT_ROOT = SETTINGS_DIR.parent().parent()
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = []
+
+INTERNAL_IPS = ['localhost', '127.0.0.1']
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -74,6 +77,13 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
+TEMPLATE_DIRS = (
+    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+    str(SETTINGS_DIR.parent()['templates'])
+)
+
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
@@ -119,13 +129,6 @@ ROOT_URLCONF = 'relog.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'relog.wsgi.application'
-
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    str(SETTINGS_DIR.parent()['templates'])
-)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -184,4 +187,14 @@ LOGGING = {
     }
 }
 
-INTERNAL_IPS = ['localhost', '127.0.0.1']
+# Marker used to identify end of excerpt for model_utils.fields.SplitField
+# This marker resembles the one used in Wordpress etc.
+SPLIT_MARKER = '<!-- more -->'
+
+# Number of paragraphs used by model_utils.fields.SplitField if there is no
+# SPLIT_MARKER found. Setting it to sys.maxint effectively disables it.
+try:
+    SPLIT_DEFAULT_PARAGRAPHS = sys.maxint
+except AttributeError:
+    # If there's not int limit (as in Python 3), just arbitrarily use 2**63 - 1
+    SPLIT_DEFAULT_PARAGRAPHS = 9223372036854775807

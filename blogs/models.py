@@ -4,7 +4,9 @@ from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import get_user_model
 from model_utils.choices import Choices
+from model_utils.fields import SplitField
 from model_utils.models import TimeStampedModel, StatusModel
+from .utils import render_to_html
 
 
 User = get_user_model()
@@ -75,7 +77,7 @@ class Post(TimeStampedModel, StatusModel, models.Model):
     )
     title = models.CharField(max_length=50, verbose_name=_('title'))
     raw_content = models.TextField(verbose_name=_('raw content'))
-    rendered_html = models.TextField(blank=True)
+    rendered_html = SplitField(blank=True)
 
     class Meta:
         verbose_name = _('blog post')
@@ -91,13 +93,13 @@ class Post(TimeStampedModel, StatusModel, models.Model):
         """
         update_fields = kwargs.get('update_fields', None)
         if update_fields is None or 'raw_content' in update_fields:
-            pass    # TODO: fill rendered fields
+            self.rendered_html.content = render_to_html(self.raw_content)
         super(Post, self).save(**kwargs)
 
 
 
 @receiver(post_save, sender=Blog)
-def blog_post_save(instance, update_fields, *args, **kwargs):
+def blog_add_owner_as_collaborator(instance, update_fields, *args, **kwargs):
     """Force blog owner into collaborators list"""
     if update_fields is None or 'owner' in update_fields:
         instance.collaborators.add(instance.owner)
