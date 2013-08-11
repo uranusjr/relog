@@ -20,4 +20,3 @@ def render_to_html(raw_content, options=None):
         writer_name='html', settings_overrides=options
     )
     return rendered['body'][8:]
-

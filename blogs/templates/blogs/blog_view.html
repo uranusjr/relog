@@ -1,0 +1,15 @@
+{% extends 'blogs/base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+{% for post in blog_posts %}
+  <div class="post">
+    <h1 class="post_title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h1>
+    {{ post.rendered_html.excerpt|safe }}
+    {% if post.rendered_html.has_more %}
+      <a href="{{ post.get_absolute_url }}">{% trans 'Read more' %}</a>
+    {% endif %}
+  </div>
+{% endfor %}
+{% endblock %}

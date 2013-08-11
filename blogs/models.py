@@ -86,6 +86,9 @@ class Post(TimeStampedModel, StatusModel, models.Model):
     def __unicode__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return ''       # TODO: Build absolute URL with reverse
+
     def save(self, **kwargs):
         """
         Override Models's save to update rendered caches when the raw content
