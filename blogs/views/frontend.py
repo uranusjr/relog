@@ -1,6 +1,6 @@
 from django.views.generic import DetailView
 from patches.utils import paginate
-from blogs.models import Blog
+from blogs.models import Blog, Post
 
 
 class BlogView(DetailView):
@@ -17,4 +17,11 @@ class BlogView(DetailView):
         return context
 
 
-blog_posts = BlogView.as_view()
+class PostView(DetailView):
+    model = Post
+    context_object_name = 'blog_post'
+    template_name = 'blogs/post_view.html'
+
+
+blog_view = BlogView.as_view()
+blog_post_detail = PostView.as_view()

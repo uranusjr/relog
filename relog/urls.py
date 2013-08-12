@@ -28,6 +28,6 @@ urlpatterns += patterns(
 )
 
 urlpatterns += patterns(
-    'blogs.views',
+    'blogs.views.backend',
     url(r'^blog/add/$', 'create_blog', name='create_blog'),
 )

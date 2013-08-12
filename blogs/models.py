@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -87,7 +88,10 @@ class Post(TimeStampedModel, StatusModel, models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return ''       # TODO: Build absolute URL with reverse
+        return reverse('blog_post_detail', kwargs={
+            'slug': self.blog.slug,
+            'pk': self.pk}
+        )
 
     def save(self, **kwargs):
         """

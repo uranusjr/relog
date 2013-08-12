@@ -1,0 +1,6 @@
+{% extends 'blogs/base.html' %}
+
+{% block content %}
+<h1 class="post_title">{{ blog_post.title }}</h1>
+{{ blog_post.rendered_html.content|safe }}
+{% endblock %}
